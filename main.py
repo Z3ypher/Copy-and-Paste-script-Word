@@ -51,12 +51,9 @@ create_word_with_image(
   font_name='Times New Roman',
   font_size=14,
   alignment=WD_ALIGN_PARAGRAPH.CENTER,
-  image_path='example.jpg'  # Provide the path to your image file
+  image_path='example.jpg')
 
-'''
-Convert from text to Word
-'''
-
+#Convert from text to Word
 def convert_text_to_word(text_file, word_file):
     # Create a new Document
     doc = Document()
