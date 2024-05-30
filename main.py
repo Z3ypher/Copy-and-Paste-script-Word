@@ -12,60 +12,6 @@ from docx.oxml.ns import qn
 from docx.oxml import OxmlElement
 
 '''
-Choose the Font
-'''
-
-def create_word_with_font(output_file, text, font_name='Arial', font_size=12):
-  # Create a new Document
-  doc = Document()
-
-  # Add a paragraph with the text
-  paragraph = doc.add_paragraph(text)
-
-  # Set the font name and size
-  run = paragraph.runs[0]
-  run.font.name = font_name
-  run.font.size = Pt(font_size)
-
-  # Workaround to set the font name correctly
-  r = run._element
-  rFonts = r.find(qn('w:rFonts'))
-  if rFonts is None:
-      rFonts = OxmlElement('w:rFonts')
-      r.insert(0, rFonts)
-  rFonts.set(qn('w:eastAsia'), font_name)
-
-  # Save the Word document
-  doc.save(output_file)
-
-# Example usage
-create_word_with_font('output.docx', 'Hello, world!', font_name='Times New Roman', font_size=14)
-
-'''
-Choose the layout
-'''
-def create_word_with_layout(output_file, text, font_name='Arial', font_size=12, alignment=WD_ALIGN_PARAGRAPH.LEFT):
-  # Create a new Document
-  doc = Document()
-
-  # Add a paragraph with the text
-  paragraph = doc.add_paragraph(text)
-
-  # Set the font name and size
-  run = paragraph.runs[0]
-  run.font.name = font_name
-  run.font.size = Pt(font_size)
-
-  # Set the alignment
-  paragraph.alignment = alignment
-
-  # Save the Word document
-  doc.save(output_file)
-
-# Example usage
-create_word_with_layout('output.docx', 'Hello, world!', font_name='Times New Roman', font_size=14, alignment=WD_ALIGN_PARAGRAPH.CENTER)
-
-'''
 Choose a logo
 '''
 def create_word_with_image(output_file, text, font_name='Arial', font_size=12, alignment=WD_ALIGN_PARAGRAPH.LEFT, image_path=None):
@@ -79,6 +25,14 @@ def create_word_with_image(output_file, text, font_name='Arial', font_size=12, a
   run = paragraph.runs[0]
   run.font.name = font_name
   run.font.size = Pt(font_size)
+
+# Workaround to set the font name correctly
+  r = run._element
+  rFonts = r.find(qn('w:rFonts'))
+  if rFonts is None:
+     rFonts = OxmlElement('w:rFonts')
+     r.insert(0, rFonts)
+  rFonts.set(qn('w:eastAsia'), font_name)
 
   # Set the alignment
   paragraph.alignment = alignment
